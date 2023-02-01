@@ -5,13 +5,13 @@ import requests
 
 url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}"
 
-config_file = "config.ini"
-config = ConfigParser()
-config.read(config_file)
-api_key = "ec71b084976d51542238c3978192ffc3"
+def get_api():
+    config = ConfigParser()
+    config.read("config.ini")
+    return config["api_key"]["key"]
 
 def get_weather(city):
-    result = requests.get(url.format(city, api_key))
+    result = requests.get(url.format(city, get_api()))
     if result:
         json = result.json()
         city = json["name"]
@@ -26,7 +26,8 @@ def get_weather(city):
         latitude = json["coord"]["lat"]
         pressure = json["main"]["pressure"]
         humidity = json["main"]["humidity"]
-        final = (city, country, temp_celsius, temp_fahrenheit, icon, weather, description, longitude, latitude, pressure,humidity)
+        windspeed = json["wind"]["speed"]
+        final = (city, country, temp_celsius, temp_fahrenheit, icon, weather, description, longitude, latitude, pressure,humidity, windspeed)
         print(final)
         return final
     else:
@@ -55,6 +56,7 @@ def Advanced_search():
         humidity_lbl["text"] = "Humidity: {:.2f}".format(weather[10])
         weather_lbl["text"] = weather[5] 
         weatherDesc_lbl["text"] = weather[6]
+        windSpeed_lbl["text"] = "Wind-Speed: {:.2f}".format(weather[11])
     else:
         messagebox.showerror("Error", "Cannot find city {}".format(city))
 
