@@ -38,6 +38,7 @@ def search():
     weather = get_weather(city)
     if weather:
         location_lbl["text"] = "{}, {}".format(weather[0], weather[1])
+        
         image["bitmap"] = "weather_icons/{}.png".format(weather[4])
         temp_lbl["text"] = "{:.2f}°C, {:.2f}°f".format(weather[2], weather[3])
         weather_lbl["text"] = weather[5] 
@@ -65,14 +66,17 @@ app.title("Weather App")
 app.geometry("700x350")
 
 city_text = StringVar()
-city_entry = Entry(app, textvariable=city_text)
+city_entry = Entry(app, textvariable=city_text, width=40)
 city_entry.pack()
+city_entry.place(y=20,x=10)
 
-search_btn1 = Button(app, text="Search weather", width=12, command=search)
+search_btn1 = Button(app, text="Search weather", width=13, command=search)
 search_btn1.pack()
+search_btn1.place(y=50,x=15)
 
-search_btn2 = Button(app, text="Advanced Search", width=12, command=Advanced_search)
+search_btn2 = Button(app, text="Advanced Search", width=13, command=Advanced_search)
 search_btn2.pack()
+search_btn2.place(y=50,x=146)
 
 location_lbl = Label(app, text="Location", font=("bold, 20"))
 location_lbl.pack()
